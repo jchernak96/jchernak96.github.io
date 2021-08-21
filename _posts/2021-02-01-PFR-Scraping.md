@@ -8,9 +8,7 @@ comments: true
 category: blog
 ---
 
-<div class="message">
   Every week, NFL players get injured with varying degrees of severity. Not much data is available to the public related to injuries, weeks missed due to injury, or the type of injury sustained. The best source of public injury info can be found on [PFR's individual team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm). While informative, the layout is not great for analysis and it is difficult to make any conclusions about team injuries. This data goes back to 2009 for every NFL team, in this post I develop a function to scrape injury data along with the underlying injury descriptions that are only visible when hovered over.
-</div>
 
 ## Inline HTML elements
 
