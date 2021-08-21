@@ -20,6 +20,12 @@ Great! Now we can just create a list of years (2009 - 2020) and then write a loo
 
 <script src="https://gist.github.com/jchernak96/9c6660319ca8361dbe2f85c780b1df75.js"></script>
 
+And voila, we have all of the URLs we need to scrape PFR. Now comes the hard part, the table provided by PFR could be scraped by the html_table function in Rvest but that results in the scraper missing what the specific injury was for each player. Notice that on the [team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm), one has to hover over the player's name and week to see what injury the player had. This is very important information, so the easiest approach of html_table can't be used. Thus, I had to employ a more complex approach that required html_nodes. 
+
+## Developing the Injury Scraper
+
+
+
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
 - **To bold text**, use `<strong>`.
