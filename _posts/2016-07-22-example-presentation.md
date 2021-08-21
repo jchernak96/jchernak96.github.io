@@ -1,8 +1,7 @@
 ---
 layout: slide
-title: Example Reveal.js Presentation Deck
-excerpt: A sample file showing the correct markup for creating a Reveal.js slide deck"
-theme: simple
+title: SIS Data Analytics Competition
+excerpt: Finished in the top 3 of the 2021 SIS football analytics competition. I utilized Bayesian methods and mixed effects models in R to determine the most effective route combinations against various coverages.
 transition: convex
 tags: [presentation]
 category: presentation
