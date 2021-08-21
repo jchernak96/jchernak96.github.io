@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Scraping Pro Football Reference (PFR) Injury History
-excerpt: "Developing a PFR Injury Scraper with Rvest"
+title: Scraping Pro Football Reference (PFR) Injury Data
+excerpt: "Developing a web scraper with Rvest to collect and organize PFR injury data"
 modified: 2/29/2016, 9:00:24
 tags: [Rvest, R, Scraping, Injuries]
 comments: true
