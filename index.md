@@ -8,5 +8,5 @@ I am a Jr. Economist in Washington D.C.
 
 - Machine Learning
 - Climate Change Mitigation
-- Sports Analytics. [Check out my presentation NFL & industry employees](https://youtu.be/efSjcSl4_lA)
+- Sports Analytics. [Check out my presentation to NFL & industry employees as a part of the SIS Sports Analytics Competition](https://youtu.be/efSjcSl4_lA)
 
