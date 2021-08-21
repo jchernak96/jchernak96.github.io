@@ -10,7 +10,12 @@ category: blog
 
   Every week, NFL players get injured with varying degrees of severity. Not much data is available to the public related to injuries, weeks missed due to injury, or the type of injury sustained. The best source of public injury info can be found on [PFR's individual team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm). While informative, the layout is not great for analysis and it is difficult to make any conclusions about team injuries. This data goes back to 2009 for every NFL team, in this post I develop a function to scrape injury data along with the underlying injury descriptions that are only visible when hovered over.
 
-## Inline HTML elements
+## Creating a List of URLs to Scrape
+
+If you opened the linked page above, you would notice that each URL only contains a specific team and specific season. This means that to collect all of the injury data we will need a list of URLs for our future scraping function to run through. The key points in the URL are the **PFR team abbreviation** and the **season of interest** (data on PFR only goes back to 2009). 
+
+
+
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
