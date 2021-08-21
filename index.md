@@ -3,8 +3,7 @@ layout: page
 excerpt: "About Me..."
 ---
 
-I am a academic, hear me roar. I am an Assistant Professor at Oregon Health & Science University.
-
+I am a Jr. Economist in Washington D.C. 
 ## Current Interests and Projects:
 
 - Website Design
