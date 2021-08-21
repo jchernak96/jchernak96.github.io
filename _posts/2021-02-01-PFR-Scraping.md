@@ -58,7 +58,7 @@ Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. N
 
 Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.
 
-![placeholder](https://pbs.twimg.com/media/Eu8fXWXXYAMXfb3?format=png&name=medium/800x400 "Large example image")
+![placeholder](https://pbs.twimg.com/media/Eu8fXWXXYAMXfb3?format=png&name=medium)
 
 ### Tables
 
