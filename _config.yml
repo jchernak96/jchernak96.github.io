@@ -1,19 +1,19 @@
 # Site wide configuration
 
-title: Academic Website of Ted Laderas
+title: Portfolio of Joseph Chernak
 locale: en_US
 logo: # filename of a logo image that has been placed into your images directory
 
 # Enter the following platform usernames if you would like for them to appear on your site.
 owner:
-  name: Ted Laderas
+  name: Joseph Chernak
   avatar: bio-photo.jpg
   bio: "This is a sample Jekyll academic website."
-  email: laderast@ohsu.edu
+  email: jtchernak@comcast.net
   # Do not include the @ symbol in your Twitter username
-  twitter: laderast
-  linkedin: #username
-  github: laderast
+  twitter: PatriotsStatsR
+  linkedin: https://www.linkedin.com/in/joseph-c-8403a410a/
+  github: jchernak96
   orcid: # ID Number (ex. 0000-0000-0000-0000)
   researchgate: #username
   mendeley: #username
