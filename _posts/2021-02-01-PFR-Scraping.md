@@ -14,9 +14,9 @@ category: blog
 
 If you opened the linked page above, you would notice that each URL only contains a specific team and specific season. This means that to collect all of the injury data we will need a list of URLs for our future scraping function to run through. The key points in the URL are the <strong>PFR team abbreviation</strong> and the <strong>season of interest</strong> (data on PFR only goes back to 2009). First, we can start with assembling the list of team abbreviations. This is a little different than NFL Fast R abbreviations so if you don't recognize an abbreviation don't worry (Titans are oti which very confusing). 
 
+{% gist 5555251 gist.md %}
 
-
-
+<script src="https://gist.github.com/jchernak96/c8db3fb82a1255f3a64e4a9967ef0b71.js"></script>
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
