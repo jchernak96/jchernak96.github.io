@@ -14,11 +14,39 @@ category: blog
 
 If you opened the linked page above, you would notice that each URL only contains a specific team and specific season. This means that to collect all of the injury data we will need a list of URLs for our future scraping function to run through. The key points in the URL are the <strong>PFR team abbreviation</strong> and the <strong>season of interest</strong> (data on PFR only goes back to 2009). First, we can start with assembling the list of team abbreviations. This is a little different than NFL Fast R abbreviations so if you don't recognize an abbreviation don't worry (Titans are oti which very confusing). 
 
-<script src="https://gist.github.com/jchernak96/c8db3fb82a1255f3a64e4a9967ef0b71.js"></script>
+```{r, message=FALSE}
+library(dplyr)
+library(glue)
+library(rvest)
+library(stringr)
+library(tidyr)
+library(tidyverse)
+
+teams = list( "crd", "atl", "rav", "buf", "car", "chi", "cin", "cle", "dal", "den", "det", "gnb", "htx", "clt", "jax", "kan", "sdg", "ram", "rai", "mia", "min", "nor", "nwe", "nyg", "nyj", "phi", "pit", "sea", "sfo", "tam", "oti", "was" )
+```
 
 Great! Now we can just create a list of years (2009 - 2020) and then write a loop that modifies the base PFR URL with all possible combinations of seasons and team abbreviations. One the loop finishes I perform some basic cleaning of the URLs for the web scraping function.
 
-<script src="https://gist.github.com/jchernak96/9c6660319ca8361dbe2f85c780b1df75.js"></script>
+```{r, message=FALSE}
+years = list("2020")
+
+url <- capture.output(
+
+for (n in teams) {
+  for (a in years) {
+
+    print(paste0("https://www.pro-football-reference.com/teams/",n,"/",a,"_injuries.htm"))
+
+}
+})
+
+url <- url %>%
+  noquote() %>%
+  substr(6,100) %>%
+  noquote()
+
+url <- gsub('"', '', url)
+```
 
 And voila, we have all of the URLs we need to scrape PFR. Now comes the hard part, the table provided by PFR could be scraped by the html_table function in Rvest but that results in the scraper missing what the specific injury was for each player. Notice that on the [team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm), one has to hover over the player's name and week to see what injury the player had. This is very important information, so the easiest approach of html_table can't be used. Thus, I had to employ a more complex approach that required html_nodes. 
 
