@@ -14,7 +14,7 @@ category: blog
 
 If you opened the linked page above, you would notice that each URL only contains a specific team and specific season. This means that to collect all of the injury data we will need a list of URLs for our future scraping function to run through. The key points in the URL are the <strong>PFR team abbreviation</strong> and the <strong>season of interest</strong> (data on PFR only goes back to 2009). First, we can start with assembling the list of team abbreviations. This is a little different than NFL Fast R abbreviations so if you don't recognize an abbreviation don't worry (Titans are oti which very confusing). 
 
-```{r, message=FALSE}
+```{r}
 library(dplyr)
 library(glue)
 library(rvest)
@@ -27,7 +27,7 @@ teams = list( "crd", "atl", "rav", "buf", "car", "chi", "cin", "cle", "dal", "de
 
 Great! Now we can just create a list of years (2009 - 2020) and then write a loop that modifies the base PFR URL with all possible combinations of seasons and team abbreviations. One the loop finishes I perform some basic cleaning of the URLs for the web scraping function.
 
-```{r, message=FALSE}
+```{r}
 years = list("2020")
 
 url <- capture.output(
@@ -35,7 +35,7 @@ url <- capture.output(
 for (n in teams) {
   for (a in years) {
 
-    print(paste0("https://www.pro-football-reference.com/teams/",n,"/",a,"_injuries.htm"))
+   print(paste0("https://www.pro-football-reference.com/teams/",n,"/",a,"_injuries.htm"))
 
 }
 })
