@@ -191,4 +191,4 @@ Now the interesting part. We can graph who the most injured teams of 2020 were o
 
 ![placeholder](https://pbs.twimg.com/media/Eu8fXWXXYAMXfb3?format=png&name=medium)
 
-No real suprises here, the 49ers were heavily injured on both sides of the ball while  
+No real suprises here, the 49ers were heavily injured on both sides of the ball while the Bucs were relatively healthy throughout the season. 
