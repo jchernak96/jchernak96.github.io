@@ -199,8 +199,6 @@ fit_values %>%
   gt()
 ```
 
-![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-6-1.png)
-
 Very small sample size disclaimer but most QB’s with this profile experienced a decrease in their EPA/Play the following season (-.08 average decrease in EPA/Play). It’s difficult to know if this is because of a high VOLoe in the prior season or because it is difficult to maintain an elite level of EPA. This does align with some of skepticism people have about Tannehill and Fitzpatrick though. 
 
 Other Questions to Answer
