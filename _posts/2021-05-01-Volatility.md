@@ -91,47 +91,7 @@ rm(Gini_Function)
 
 Applying the function to our data frame yields a gini score for each quarterback season since 1999 (minimum 250 throws in given season). We can then plot a QB’s volatility and EPA/Play in the 2020 season. Lower volatility is better, meaning up and to the right is best.
 
-```{r, message=FALSE}
-#group up each QB & season
-QBs_Grouped <- pbp_QBs_gini %>%
-  group_by(
-    id,
-    season
-  ) %>%
-  #group by each QB to see their VOL on a season by season basis
-  summarize(
-    name  = unique(name),
-    color = unique(team_color),
-    VOL   = unique(VOL),
-    EPA_play = unique(Season_EPA),
-    Plays = sum(plays)
-  ) %>%
-  ungroup() 
-#check who the least volatile, highest EPA/Play QB's were in 2020
-Data_2020 <- QBs_Grouped %>%
-  filter(season == 2020) 
-Data_2020 %>%
-  ggplot(aes(x = EPA_play, y = VOL)) +
-  geom_point(colour = "black", shape=21, size = 3, 
-             aes(x = EPA_play, y = VOL), fill = Data_2020$color, alpha = .75)+
-  theme_light() +
-  geom_abline(slope = -1.5, intercept = c(-1,-.8, -.6, -.4, -.2, 0), 
-              alpha = .2)+
-  theme(plot.title = element_text(color="black", size=8, face="bold"))+
-  theme(plot.title = element_text(size = 10, face = "bold"),
-        plot.subtitle = element_text(size = 8))+
-  theme(plot.background = element_rect(fill = "gray97"))+
-  theme(panel.background = element_rect(fill = "gray97"))+
-  labs(title = "Good Quarterbacks are Consistent While Bad Quarterbacks are Volatile",
-       subtitle = "Relationship Between Volatility and EPA/Play (2020) - Minimum 250 Plays",
-       caption = "Plot: PatriotsStatsR, Data: NFLFastR")+
-  ylab("Volatility")+
-  xlab("EPA/Play")+
-  geom_hline(yintercept = mean(Data_2020$VOL) , linetype = "dashed") +
-  geom_vline(xintercept = mean(Data_2020$EPA_play), linetype = "dashed") +
-  ggrepel::geom_text_repel(aes(label=name), box.padding = 0.4) +
-  scale_y_reverse() 
-```
+![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-3-1.png)
 
 This isn’t too surprising, good quarterbacks (as measured by EPA/Play) are consistent while middle of the pack QB’s tend to be the most volatile. Once we reach the worst QB’s (Wentz, Haskins, Darnold) those players tend to be consistently bad. Essentially, the relationship between EPA/Play and volatility is a parabola shape. 
 
@@ -141,49 +101,7 @@ This plot also provides perspective on QB’s who have a similar EPA/Play but ha
 
 VOL tells a simple story but it doesn’t tell us how much more volatile a QB was given their EPA. E.g. Ryan Tannehill had a 0.31 EPA/Play and a volatility of 0.45, was this more volatile than expected given his performance? We can built a Generalized Additive Model (GAM) with MGCV that includes variables that correlate with VOL. The two variables that most correlate with VOL are EPA/Play & Total Plays. 
 
-```{r, message=FALSE}
-#create melted data frame of plays & EPA/Play
-model_1_data_melted <- QBs_Grouped %>%
-  rename("EPA/Play" = "EPA_play") %>%
-  gather(key = feature, value = value, -VOL) %>%
-  filter(feature %in% c("EPA/Play", "Plays")) %>%
-  mutate(value = as.numeric(value), feature = factor(feature))
-#color palette from Petti
-gini_palette <- c('#3E0002', '#8e001c', '#D87F83', '#969696', '#636363', '#252525')
-#plot 
-model_1_data_melted %>%
-  ggplot(aes(value, VOL)) + 
-  geom_point(aes(color = feature), size = 2, alpha = .5) + 
-  facet_wrap(~feature, scales = "free_x") +
-  xlab("\nVariable Value") +
-  ylab("\nVolatility\n") +
-  theme_minimal(base_size = 12, base_family = "cairo") %+replace%
-  theme(
-    panel.border = element_blank(),
-    panel.background = element_blank(),
-    panel.grid.major = element_line(color='#BFBFBF', size=.25),
-    axis.title = element_text(face='bold', hjust=.5, vjust=0),
-    axis.text = element_text(color='black')
-  ) +
-  theme(plot.title = element_text(color="black", size=8, face="bold"))+
-  coord_cartesian(clip = "off") +
-  theme(plot.title = element_text(size = 12, face = "bold"),
-        plot.subtitle = element_text(size = 10))+
-  theme(plot.background = element_rect(fill = "gray97"))+
-  theme(panel.background = element_rect(fill = "gray97"))+
-  labs(title = "Relationship Between Volatility, Plays, and EPA/Play",
-       subtitle = "Minimum 250 Plays (Passes, Rushes & Penalties): Seasons 1999 - 2020",
-       caption = "Plot: PatriotsStatsR, Data: NFLFastR")+
-  scale_color_manual(values = gini_palette, "Variables") +
-  theme(title = element_text(face = "bold"), 
-        axis.text = element_text(face = "bold"),
-        strip.text.x = element_text(face = "bold")) 
-#remove extra data
-rm(gini_cor)
-rm(model_1_data_melted)
-rm(pbp_QBs_gini)
-rm(Data_2020)
-```
+![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-4-1.png)
 
 And then we can built the model, I tried a few variations but the model with a 9 knot cubic smoothing spline on EPA/Play performed best. 
 
@@ -200,12 +118,15 @@ set.seed(2018)
 df    <- sample(nrow(Modeling_Data), nrow(Modeling_Data) * .7)
 train <- Modeling_Data[df,]
 test  <- Modeling_Data[-df,]
+
 #tried a few models, GAM performed best
 #fit model after trying a few different combos
 model1 <- mgcv::gam(VOL ~ s(EPA_play, k = 9, bs="cr") + Plays, data = train)
+
 #check again
 mgcv::gam.check(model1, k.rep=1000) #K & EDF are not close, p is no longer significant
 summary(model1) #0.75 adjusted r squared
+
 #check rmse
 fit_1 <- predict(model1, test)
 model_1_res_act <- data.frame(actuals = test$VOL, predicted = fit_1) %>%
@@ -224,40 +145,9 @@ The model has an adjusted R squared of .75, an RMSE of .05, and the GAM check di
 fit_all <- data_frame(predicted = predict(model1, QBs_Grouped))
 fit_values <- cbind(QBs_Grouped, fit_all) %>%
   mutate(VOLoe = VOL - predicted)
-rm(model1)
-rm(fit_all)
-rm(model_1_res_act)
-rm(test)
-rm(train)
-rm(Modeling_Data)
-rm(df)
-rm(fit_1)
-rm(model1)
-rm(QBs_Grouped)
-rm(rmse)
-#examine 2020 QBs after controlling for factors in model
-fit_2020 <- fit_values %>%
-  filter(season == 2020) 
-fit_2020 %>%
-  ggplot(aes(y = VOLoe, x = EPA_play)) +
-  geom_point(colour = "black", shape=21, size = 3, 
-             aes(y = VOLoe, x = EPA_play), fill = fit_2020$color, alpha = .75)+
-  theme_light() +
-  theme(plot.title = element_text(color="black", size=8, face="bold"))+
-  theme(plot.title = element_text(size = 10, face = "bold"),
-        plot.subtitle = element_text(size = 8))+
-  theme(plot.background = element_rect(fill = "gray97"))+
-  theme(panel.background = element_rect(fill = "gray97"))+
-  labs(title = "Are Tannehill and Fitzpatricks's High VOLoe Cause for Concern?",
-       subtitle = "Relationship Between VOLoe and EPA/Play (2020) - Minimum 250 Dropbacks",
-       caption = "Plot: PatriotsStatsR, Data: NFLFastR")+
-  ylab("Volatility Over Expected")+
-  xlab("EPA/Play")+
-  geom_hline(yintercept = 0 , linetype = "dashed") +
-  geom_vline(xintercept = mean(fit_2020$EPA_play), linetype = "dashed") +
-  ggrepel::geom_text_repel(aes(label=name), box.padding = 0.2)
-rm(fit_2020)
 ```
+
+![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-6-1.png)
 
 Most quarterbacks were close to their predicted level of volatility. Two QB’s that particularly stick out are Fitzpatrick and Tannehill, both performed well but had high volatility over expected scores. A quick investigation of QB’s who had a similar high level of EPA/Play and VOL over expected could perhaps provide insight into if we should be skeptical of this profile. 
 
@@ -309,6 +199,8 @@ fit_values %>%
   gt()
 ```
 
+![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-6-1.png)
+
 Very small sample size disclaimer but most QB’s with this profile experienced a decrease in their EPA/Play the following season (-.08 average decrease in EPA/Play). It’s difficult to know if this is because of a high VOLoe in the prior season or because it is difficult to maintain an elite level of EPA. This does align with some of skepticism people have about Tannehill and Fitzpatrick though. 
 
 Other Questions to Answer
@@ -351,50 +243,9 @@ for (x in 1999:2020) {
     mutate(Age_Sep_1 = calc_age(birth_date, paste0(x,"-09-01")))
   rosters <- rbind(df, rosters)
 }
-rosters <- rosters %>%
-  filter(position == "QB")
-#bind with VOL data & plot
-fit_values %>%
-  left_join(rosters, by = c("id" = "gsis_id", "season" = "season")) %>%
-  group_by(Age_Sep_1) %>%
-  summarize(VOLoe   = mean(VOLoe, na.rm = TRUE),
-            VOL     = mean(VOL, na.rm = TRUE),
-            Sample = n()) %>%
-  gather(key = feature, value = value, -Age_Sep_1, - Sample) %>%
-  filter(feature %in% c("VOLoe", "VOL")) %>%
-  ggplot(aes(Age_Sep_1, value)) + 
-  geom_point(aes(color = feature, size = Sample),  alpha = .5) + 
-  facet_wrap(~feature, scales = "free_y") +
-  xlab("Age (As of September 1st of Season)") +
-  ylab("Feature Value") +
-  theme_minimal(base_size = 12, base_family = "cairo") %+replace%
-  theme(
-    panel.border = element_blank(),
-    panel.background = element_blank(),
-    panel.grid.major = element_line(color='#BFBFBF', size=.25),
-    axis.title = element_text(face='bold', hjust=.5, vjust=0),
-    axis.text = element_text(color='black')
-  ) +
-  theme(plot.title = element_text(color="black", size=8, face="bold"))+
-  coord_cartesian(clip = "off") +
-  theme(plot.title = element_text(size = 12, face = "bold"),
-        plot.subtitle = element_text(size = 10))+
-  theme(plot.background = element_rect(fill = "gray97"))+
-  theme(panel.background = element_rect(fill = "gray97"))+
-  labs(title = "No Relationship Between QB Age and Volatility or VOL Over Expectation",
-       subtitle = "Minimum 250 Plays (Passes, Rushes & Penalties): Seasons 1999 - 2020",
-       caption = "Plot: PatriotsStatsR, Data: NFLFastR") +
-  scale_color_manual(values = gini_palette, "Features") +
-  theme(title = element_text(face = "bold"), 
-        axis.text = element_text(face = "bold"),
-        strip.text.x = element_text(face = "bold"))+
-  geom_smooth(method = lm, formula = y ~ splines::bs(x, 7), se = FALSE, color = "black")
-  
-rm(rosters)
-rm(df)
-rm(x)
-rm(calc_age)
 ```
+
+![placeholder](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/QB_Volatility_files/figure-html5/unnamed-chunk-8-1.png)
 
 There doesn’t appear to be very much of a relationship. This is also a difficult question to answer because of survivorship bias. Good QB’s play longer, good QB’s also tend to have low volatility. Thus, volatile QB’s tend to be average to below average QB’s and don’t play as long. 
 
