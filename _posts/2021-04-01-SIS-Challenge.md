@@ -8,9 +8,42 @@ comments: true
 category: blog
 ---
 
-<div class="message">
-  Howdy! This is an example blog post that shows several types of HTML content supported in this theme.
-</div>
+Sports Info Solutions (SIS) posed the following prompt as a part of their 2021 analytics competition: Which route combinations were most popular in the NFL in 2020? Of these route combinations, which perform best against each coverage type?
+
+Not a terribly complicated question, but developing a statistical solution without tracking data is a complicated problem. For transparency, each row in the provided data set looks something like this for one play:
+
+<table>
+  <thead>
+    <tr>
+      <th>Play ID</th>
+      <th>Receiver Name</th>
+      <th>Route</th>
+      <th>Side of Center</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>012854</td>
+      <td>Julian Edelman</td>
+      <td>Dig</td>
+      <td>L</td>
+    </tr>
+    <tr>
+      <td>012854</td>
+      <td>Jacobi Meyers</td>
+      <td>Drag</td>
+      <td>L</td>
+    </tr>
+    <tr>
+      <td>012854</td>
+      <td>Devin Asiasi</td>
+      <td>Dig</td>
+      <td>R/td>
+    </tr>
+    </tr>
+  </tbody>
+</table>
+
 
 Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. *Aenean eu leo quam.* Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.
 
