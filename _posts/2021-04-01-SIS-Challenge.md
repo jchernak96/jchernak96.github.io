@@ -38,7 +38,7 @@ Not a terribly complicated question, but developing a statistical solution witho
       <td>012854</td>
       <td>Devin Asiasi</td>
       <td>Dig</td>
-      <td>R/td>
+      <td>R</td>
     </tr>
   </tbody>
 </table>
