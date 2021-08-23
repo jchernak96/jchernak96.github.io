@@ -54,6 +54,14 @@ And voila, we have all of the URLs we need to scrape PFR. Now comes the hard par
 
 There are a few distinct features of the scraper that were created to accomodate inconsistencies between each team page. 
 
+Problem 1. The aformentioned hidden text that describes what the injury is for each player can't be scraped with html table.
+Solution: I use the "data tip" path to grab any injury info. The specific code is <strong>try(xml_attrs(team_url[[1]])[["data-tip"]])</strong>. Note the try portion of the code, not every player has an injury note so this prevents the function from stopping if there is no data tip. 
+
+Problem 2. Different number of games played for each team (ranges from 17 to 20).
+Solution: I instruct the function to run through a sequence of 1 through 20. If a week beyond 16 is not detected, then the function will not malfunction as I inserted the try code again. 
+
+The function code can be found below, it is a bit lengthy but that is in part because of having to clean the messy output of bypassing html table. 
+
 ```{r}
 testing <- function(urls){
   
@@ -160,6 +168,8 @@ testing <- function(urls){
 
 ## Running the Scraper
 
+Then we can run the scraper with the following loop. 
+
 ```{r}
 ###Create empty data frame to store data
 empty <- data.frame()
@@ -175,78 +185,10 @@ empty <- rbind(empty, output)
 }
 ```
 
-
-
-
-- **To bold text**, use `<strong>`.
-- *To italicize text*, use `<em>`.
-- Abbreviations, like <abbr title="HyperText Markup Langage">HTML</abbr> should use `<abbr>`, with an optional `title` attribute for the full phrase.
-- Citations, like <cite>&mdash; Mark otto</cite>, should use `<cite>`.
-- <del>Deleted</del> text should use `<del>` and <ins>inserted</ins> text should use `<ins>`.
-- Superscript <sup>text</sup> uses `<sup>` and subscript <sub>text</sub> uses `<sub>`.
-
-Most of these elements are styled by browsers with few modifications on our part.
-
-## Heading
-
-Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-
-
-### Gists via GitHub Pages
-
-Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.
-
-{% gist 5555251 gist.md %}
-
-Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui. Vestibulum id ligula porta felis euismod semper.
-
 ### Analysis of 2020 Injuries
 
-Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.
+Now the interesting part. We can graph who the most injured teams of 2020 were on both sides of the ball. No real suprises here. 
 
 ![placeholder](https://pbs.twimg.com/media/Eu8fXWXXYAMXfb3?format=png&name=medium)
 
-### Tables
 
-Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Upvotes</th>
-      <th>Downvotes</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <td>Totals</td>
-      <td>21</td>
-      <td>23</td>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr>
-      <td>Alice</td>
-      <td>10</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <td>Bob</td>
-      <td>4</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>Charlie</td>
-      <td>7</td>
-      <td>9</td>
-    </tr>
-  </tbody>
-</table>
-
-Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.
-
------
-
-Want to see something else added? <a href="https://github.com/poole/poole/issues/new">Open an issue.</a>
