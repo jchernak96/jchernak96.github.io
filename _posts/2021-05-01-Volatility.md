@@ -247,7 +247,7 @@ for (x in 1999:2020) {
 
 There doesn’t appear to be very much of a relationship. This is also a difficult question to answer because of survivorship bias. Good QB’s play longer, good QB’s also tend to have low volatility. Thus, volatile QB’s tend to be average to below average QB’s and don’t play as long. 
 
-Wrapping Up
+## Wrapping Up
 
 This post demonstrated that on a macro scale, good QB’s have low volatility while middle of the pack QB’s tend to have the highest level of volatility. Raw volatility could be helpful for deciding between backup QB’s with similar EPA/Play (prefer the volatile bad QB due to the chance of a good game). Volatility over expected (VOLoe) can be used to detect high level EPA/Play seasons that also have a high VOLoe (possible indication of future regression). 
 
