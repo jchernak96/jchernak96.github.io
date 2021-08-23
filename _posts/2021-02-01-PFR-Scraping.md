@@ -187,8 +187,8 @@ empty <- rbind(empty, output)
 
 ### Analysis of 2020 Injuries
 
-Now the interesting part. We can graph who the most injured teams of 2020 were on both sides of the ball. No real suprises here. 
+Now the interesting part. We can graph who the most injured teams of 2020 were on both sides of the ball. Man games lost were calculated by summing the total missed games from rostered players throughout the season. For example, player x strained his hamstring and missed 8 games. He would acrue 8 man games lost by this methodology. 
 
 ![placeholder](https://pbs.twimg.com/media/Eu8fXWXXYAMXfb3?format=png&name=medium)
 
-
+No real suprises here, the 49ers were heavily injured on both sides of the ball while  
