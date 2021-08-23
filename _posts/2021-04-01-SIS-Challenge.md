@@ -40,10 +40,10 @@ Not a terribly complicated question, but developing a statistical solution witho
       <td>Dig</td>
       <td>R/td>
     </tr>
-    </tr>
   </tbody>
 </table>
 
+This layout is extended to the rest of the 2020 season to create a database of plays. 
 
 Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. *Aenean eu leo quam.* Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.
 
