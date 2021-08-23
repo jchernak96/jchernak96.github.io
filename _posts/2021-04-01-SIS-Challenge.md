@@ -43,15 +43,18 @@ Not a terribly complicated question, but developing a statistical solution witho
   </tbody>
 </table>
 
-This layout is extended to the rest of the 2020 season to create a database of plays. 
+This layout is extended to the rest of the 2020 season to create a database of plays. My first step in addressing the promt was laying out assumpstions and cleaning the data.
 
-Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. *Aenean eu leo quam.* Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.
+## Assumptions and Cleaning
 
-> Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.
+The first assumption made in this analysis is what defines a route combo. I developed the following description: <strong> 2 or more routes that are designed within the structure of the play to interact with each other. This includes patterns that begin on opposite sides of the center (for example mesh) </strong>. This is a relatively simple definition that provides enough guidance when manipulating the data when cleaning but still provides direction when answering the prompt. Once this workign definition was established, I moved onto cleaning the route data. This began with reclassifying routes into more general bins. The idea behind this assumption was that I sought to capture the general route concept given we can't see the play. Therefore, we are not capturing very subtle differences in the data and having a sample size issue when we later group route combos together. 
 
-Etiam porta **sem malesuada magna** mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
+Additionally, routes that were classified as “Flat – Left”, “Flat – Right”, “Swing – eft”, or “Swing – Right” and did not involve fast motion were reclassified to just 
+“Flat” or “Swing”. Those routes that did involve a fast motion were also reclassified to “Flat” or “Swing”, but their side of center was changed if their side of center was opposite from the described “left” or “right” action. (E.g., a player who: 1.) ran a “Flat – Left”, 2.) was initially marked as a “R” side  of center & 3.) was marked as involved in fast motion, was reclassified as a “Flat” with an “L” side of center and their order from out to in was set as the innermost route runner. 
 
-## Inline HTML elements
+In theory, we could just split each play into routes run onto the left side of the center and right side of the center and analyze both sides as separate route combos. But this ignores route combos that involve crossing patterns. To address this, I classified the following routes as “crossing routes” if run by a slot WR or tight end: "Drag", "Dig", "Deep Cross", "Post", "Sit Over Middle”. If a play had a crossing route from a slot WR or TE on both sides of the field, then I considered this play a crosser and extracted only the crossing routes from the play. For example: Left SOC WR #1 has a “Go” and is aligned at “WR”, WR #2 has a “Drag” is aligned at “SWR” , WR #3 has a “Dig” and is aligned at “SWR”. Right SOC WR # 1 has a “Drag” is aligned at “SWR”. We would mark this play as a crosser and extract the two drags and the dig while ignoring the “Go”. The process of extracting crossing routes along with cleaning the data was very tedious and long so I omitted it from the post here but it is available [on my GitHub](https://github.com/jchernak96/AnalyticsChallenge2021/blob/main/Submissions/jtchernak%40comcast.net/R/Analytics_Challenge_Cleaning.rmd). 
+
+## What Route Combo's Were Most Popular?
 
 HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
 
