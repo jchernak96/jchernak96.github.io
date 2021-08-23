@@ -20,7 +20,7 @@ This post uses NFLfastR quarterback data from 1999 to 2020. The full data prep p
 1.  Games where QB x is involved in less than 5 plays (passes, rushes, penalties) are removed from that QB’s history. This is under the assumption that if QB x was involved in so few plays, they were injured or rested. Since the gini coefficient doesn’t consider the amount of plays in a game, this method protects the gini score from being inflated by very low opportunity, low EPA games. 
 2.  Filtered for QB’s who threw greater than 250 passes in a season.
 
-```{r, message=FALSE}
+```{r}
 #packages
 library(dplyr)
 library(ggcorrplot)
@@ -41,7 +41,7 @@ DF <- read_rds("VOL_DF.rds") %>%
 
 To calculate each QB’s gini coefficient, we can use the same function created in Petti’s article. A typical gini calculation can’t be used with EPA because of negative EPA values, thus the modified gini method has to be used. 
 
-```{r, message=FALSE}
+```{r}
 #Gini coefficient function to handle negative EPA
 Gini_Function <- function(Y) {
   
@@ -105,7 +105,7 @@ VOL tells a simple story but it doesn’t tell us how much more volatile a QB wa
 
 And then we can built the model, I tried a few variations but the model with a 9 knot cubic smoothing spline on EPA/Play performed best. 
 
-```{r, message=FALSE}
+```{r}
 #Build expected VOL model that controls for EPA & Plays
 Modeling_Data <- QBs_Grouped %>%
   select(
@@ -140,7 +140,7 @@ rmse(model_1_res_act) #.05 rmse
  
 The model has an adjusted R squared of .75, an RMSE of .05, and the GAM check diagnostics pass the smell test. After fitting the model to our data, we can re-plot 2020 QB EPA/Play and VOL over expected. VOLoe values slightly off 0 (Allen, Mahomes, Brady) shouldn't be cause for concern, instead they should be interpreted as about right where expected. The primary usage of VOLoe should be in detecting significantly higher or lower VOLoe values. Higher VOLoe is worse and represents a more volatile than expected season.
 
-```{r, message=FALSE}
+```{r}
 #fit model to actual data
 fit_all <- data_frame(predicted = predict(model1, QBs_Grouped))
 fit_values <- cbind(QBs_Grouped, fit_all) %>%
@@ -151,7 +151,7 @@ fit_values <- cbind(QBs_Grouped, fit_all) %>%
 
 Most quarterbacks were close to their predicted level of volatility. Two QB’s that particularly stick out are Fitzpatrick and Tannehill, both performed well but had high volatility over expected scores. A quick investigation of QB’s who had a similar high level of EPA/Play and VOL over expected could perhaps provide insight into if we should be skeptical of this profile. 
 
-```{r, message=FALSE}
+```{r}
 #find QBs with 85th percentile or greater EPA & VOL
 quantile(fit_values$EPA_play, probs = c(0.85)) #.18 
 quantile(fit_values$VOLoe, probs = c(0.85)) #.05 or more
@@ -205,7 +205,7 @@ Other Questions to Answer
 
 There are a lot of questions related to volatility that come to mind, but for the sake of brevity I will touch upon one that immediately comes to mind: does volatility of VOLoe change with a QB’s age? We can examine both metrics by age. 
 
-```{r, message=FALSE}
+```{r}
 #first, merge data with rosters and calculate age
 calc_age <- function(birthDate, refDate = Sys.Date(), unit = "year") {
   
