@@ -7,13 +7,13 @@ I am a Jr. Economist in Washington D.C. who has 4 years of experience with stati
 
 ## Languages & Softwares
 
-# Proficient in:
+### Proficient in:
 - R
 - Excel 
 - IMPLAN
 - REMI
 
-# Beginner in
+### Beginner in
 - Python
 
 ## Current Interests and Projects:
