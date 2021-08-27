@@ -2,7 +2,7 @@
 layout: post
 title: SIS Analytics Competition Submission
 excerpt: "Evaluating route combos and coverages with mixed models."
-modified: 2/29/2016, 9:00:24
+modified: 8/27/2021, 9:00:24
 tags: [Mixed Effects, Competition, Presentation]
 comments: true
 category: blog
