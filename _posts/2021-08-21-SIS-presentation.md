@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SIS Data Analytics Competition
-excerpt: Finished in the top 3 of the 2021 SIS football analytics competition & presented to a panel of analytics judges.
+excerpt: Finished as a finalist in the 2021 SIS football analytics competition & presented to a panel of analytics judges.
 transition: convex
 tags: [presentation]
 category: presentation
