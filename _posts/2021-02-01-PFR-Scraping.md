@@ -28,24 +28,29 @@ teams = list( "crd", "atl", "rav", "buf", "car", "chi", "cin", "cle", "dal", "de
 Great! Now we can just create a list of years (2009 - 2020) and then write a loop that modifies the base PFR URL with all possible combinations of seasons and team abbreviations. One the loop finishes I perform some basic cleaning of the URLs for the web scraping function.
 
 ```{r}
-years = list("2020")
+###List of years
+years = list(2009:2020)
 
+###Loop to create  urls to scrape
 url <- capture.output(
-
-for (n in teams) {
-  for (a in years) {
-
+  
+  for (n in teams) {
+    for (a in years) {
+  
+    ###URL of interest
    print(paste0("https://www.pro-football-reference.com/teams/",n,"/",a,"_injuries.htm"))
+    
 
-}
+  }
 })
 
-url <- url %>%
+###Remove uneeded strings
+url <- url%>%
   noquote() %>%
   substr(6,100) %>%
   noquote()
-
 url <- gsub('"', '', url)
+
 ```
 
 And voila, we have all of the URLs we need to scrape PFR. Now comes the hard part, the table provided by PFR could be scraped by the html_table function in Rvest but that results in the scraper missing what the specific injury was for each player. Notice that on the [team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm), one has to hover over the player's name and week to see what injury the player had. This is very important information, so the easiest approach of html_table can't be used. Thus, I had to employ a more complex approach that required html_nodes. 
@@ -63,9 +68,10 @@ Solution: I instruct the function to run through a sequence of 1 through 20. If 
 The function code can be found below, it is a bit lengthy but that is in part because of having to clean the messy output of bypassing html table. 
 
 ```{r}
-testing <- function(urls){
+###Function to scrape url of choice
+Scraper <- function(urls){
   
-    dataframe = data.frame()
+     dataframe = data.frame()
 
     ###URL of interest
     url <- read_html(urls)
@@ -83,7 +89,7 @@ testing <- function(urls){
              Season = url %>%
       html_nodes(xpath = '//*[@id="meta"]/div[2]/h1/span[1]') %>%
       html_text()) %>%
-      rename("Names"=".")%>%
+      dplyr::rename("Names"=".")%>%
       mutate("Row" = row_number()) %>%
       relocate(Row, .before = Names)
     
@@ -120,22 +126,19 @@ testing <- function(urls){
       
       ###Make data longer for easier interpretation and rename variables
       melt_1 <- reshape::melt(df1, id.vars=c("Row","Names", "Team", "Season"))%>%
-        rename("Active_Inactive"=value)
+        dplyr::rename("Active_Inactive"=value)
       melt_2 <- reshape::melt(df2, id.vars=c("Row","Names", "Team", "Season")) %>%
         select(value) %>%
-        rename("Week"=value)
+        dplyr::rename("Week"=value)
       melt_3 <- reshape::melt(df3, id.vars=c("Row","Names", "Team", "Season")) %>%
         select(value) %>%
-        rename("Injury"=value)
+        dplyr::rename("Injury"=value)
       
       ###If DNP is detected in the string then individual did not play, rename output to reflect this rather than long code
       melt_1 <- melt_1 %>%
       mutate("Active_Inactive" = ifelse(str_detect(melt_1$Active_Inactive, "dnp") == TRUE, "Out", "Active")) 
       
-      ###If the individual carried no designation then the data tip xpath returns an error, we detect this and replace the 
-      ###output with a healthy designation but leave actual injury if one is available. Also, seperate string to create new column 
-      ###and specific injury.
-      
+      ###If the individual carried no designation then the data tip xpath returns an error, we detect this and replace the           output with a healthy designation but leave actual injury if one is available. Also, seperate string to create new column       and specific injury.
       melt_3 <- melt_3 %>%
       mutate("Game_Status" = ifelse(str_detect(melt_3$Injury, "subscript out of bounds") == TRUE, "Healthy", Injury)) %>%
       select(-Injury) %>%
@@ -153,7 +156,6 @@ testing <- function(urls){
       ###Make weeks numberic 
       final$Week <- as.numeric(final$Week)
       final$Injury_Type = str_to_title(final$Injury_Type)
-
       
       ###Filter out any NAs or weeks that team did not play in
       final <- final %>%
@@ -164,6 +166,25 @@ testing <- function(urls){
     
     return(final)
 }
+
+
+###Create empty data frame to store data
+empty <- data.frame()
+
+
+###Create loop that will go through our urls and return injuryies
+for (x in url) {
+
+
+output <- Scraper(x)
+
+empty <- rbind(empty, output)
+
+}
+
+###Our data
+empty 
+
 ```
 
 ## Running the Scraper
@@ -178,7 +199,7 @@ empty <- data.frame()
 ###Create loop that will go through our urls and return injuries
 for (x in url) {
 
-output <- testing(x)
+output <- scraper(x)
 
 empty <- rbind(empty, output)
 
