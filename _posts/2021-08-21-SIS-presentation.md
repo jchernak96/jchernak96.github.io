@@ -1,36 +1,9 @@
 ---
-layout: slide
+layout: post
 title: SIS Data Analytics Competition
-excerpt: Finished in the top 3 of the 2021 SIS football analytics competition. I utilized Bayesian methods and mixed effects models in R to determine the most effective route combinations against various coverages.
+excerpt: Finished in the top 3 of the 2021 SIS football analytics competition. [Watch on Youtube here](https://youtu.be/efSjcSl4_lA?t=2605)
 transition: convex
 tags: [presentation]
 category: presentation
 ---
-<section data-markdown>
 
-# Reveal.js and Jekyll Academic
-
-
-</section>
-
-<section data-markdown>
-## HTML or Markdown
-Reveal.js works with either. Use whatever you are more comfortable with.
-
-</section>
-
-<section data-markdown>
-## Works Anywhere
-
-By creating presentations using Reveal.js and hosting them on your Jekyll Academic site you will have access to them anywhere. No need to worry about software compatibility, no need to sign in to email accounts on public machines. Simply load your website and select the presentation.
-
-</section>
-<section data-markdown>
-## More Information
-
-Jekyll Academic includes everything that you need in order to make Reveal.js work. Copy this file and edit it to begin making your own slide deck.  
-
-For more information about all of the options available in Reveal.js please the [Reveal.js Demo Website](https://lab.hakim.se/reveal-js/#/)
-
-
-</section>
