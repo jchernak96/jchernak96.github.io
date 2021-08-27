@@ -8,9 +8,17 @@ comments: true
 category: blog
 ---
 
+Disclaimer: This post can also be found on [Open Source Football](https://www.opensourcefootball.com/posts/2021-08-15-QB-volatilty-gini-coefficients/)
+
 ## Intro: 
 
 A few years ago, Bill Petti posted a [great article on FanGraphs](https://tht.fangraphs.com/corrvol-updating-how-we-can-measure-hitter-volatility/) describing hitter volatility and how it can be quantified via Gini coefficients. Petti wrote that volatility is how a player distributes their overall season performance (as measured by wRC in his case) throughout the season on a game by game basis. This is opposed to streakiness which is related to clustering of good and bad performances over the course of a season. To quantify a hitters volatility, he proposed the usage of a Gini coefficient. Typically Gini coefficients are used to evaluate the wealth distribution in countries (0-1 scale where higher values indicate less equal distribution of wealth). In the case of football, a Gini coefficient can tell us how each individual quarterback distributes their cumulative season EPA (passes, rushes, penalties) on a game by game basis (includes playoffs). 
+
+In this post, I:
+- Apply Gini coefficients to QB's to determine their volatility
+- Adjust QB Gini scores for their EPA/Play & Snaps played to determine their VOLoe
+- Determine if volatility increases with QB age
+- Examine if a high VOLoe and a high EPA/Play is cause for concern
 
 In this post, I follow a similar methodology to Petti’s original work to calculate a quarterback’s volatility by season. In addition, I create a “Volatility Over Expected (VOLoe)” GAM model to evaluate a QB’s volatility within the context of their season EPA and total opportunities (passes, rushes, penalties).
 
