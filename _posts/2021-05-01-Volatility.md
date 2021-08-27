@@ -20,8 +20,6 @@ In this post, I:
 - Determine if volatility increases with QB age
 - Examine if a high VOLoe and a high EPA/Play is cause for concern
 
-In this post, I follow a similar methodology to Petti’s original work to calculate a quarterback’s volatility by season. In addition, I create a “Volatility Over Expected (VOLoe)” GAM model to evaluate a QB’s volatility within the context of their season EPA and total opportunities (passes, rushes, penalties).
-
 ## Data Prep and Packages 
 
 This post uses NFLfastR quarterback data from 1999 to 2020. The full data prep process can be found on my GitHub (just a long loop that loads the data, adds rosters so we can filter for only QB’s, and adding team colors). Some of the notable assumptions in the data cleaning process are:
