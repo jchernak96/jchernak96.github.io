@@ -8,7 +8,13 @@ comments: true
 category: blog
 ---
 
-  Every week, NFL players get injured with varying degrees of severity. Not much data is available to the public related to injuries, weeks missed due to injury, or the type of injury sustained. The best source of public injury info can be found on [PFR's individual team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm). While informative, the layout is not great for analysis and it is difficult to make any conclusions about team injuries. This data goes back to 2009 for every NFL team, in this post I develop a function to scrape injury data along with the underlying injury descriptions that are only visible when hovered over.
+Every week, NFL players get injured with varying degrees of severity. Not much data is available to the public related to injuries, weeks missed due to injury, or the type of injury sustained. The best source of public injury info can be found on [PFR's individual team injury page](https://www.pro-football-reference.com/teams/nwe/2020_injuries.htm). While informative, the layout is not great for analysis and it is difficult to make any conclusions about team injuries. This data goes back to 2009 for every NFL team, in this post I develop a function to scrape injury data along with the underlying injury descriptions that are only visible when hovered over.
+
+In this post, I:
+- Develop a scraper for PFR injuries.
+- Create a clean database of injuries to analyze.
+- Provide general analysis on the relationship between defensive ability and health.
+- Examine the correlation between injury history and future games missed.
 
 ## Creating a List of URLs to Scrape
 
@@ -215,3 +221,4 @@ Now the interesting part. We can graph who the most injured teams of 2020 were o
 No real suprises here, the 49ers were heavily injured on both sides of the ball while the Bucs were relatively healthy throughout the season. The real interesting part of this is that most of the good defensive teams were the teams that just stayed healthy. This further supports the idea that defense is difficult to predict and an important aspect is simply staying healthy. But is it possible to predict injuries or do previous injuries provide little signal of the future? We can create a quick correlation plot to think about this question. It appears there is very little signal regarding a player's injury history and their future games missed. Note that this does not delve deep into the specific injury types for players so it is possible certain injuries, such as a hamstring, may linger into the next season. 
 
 ![placeholder](https://pbs.twimg.com/media/E2e_5QdWEAMk2uc?format=png&name=small)
+
