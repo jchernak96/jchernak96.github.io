@@ -3,7 +3,7 @@ layout: page
 excerpt: "About Me..."
 ---
 
-I am a Jr. Economist in Washington D.C. who has 4 years of experience with statistical modeling of economic topics (climate change, clean transportation, cybersecurity, and immigration). In my free time, I use R to analyze sports data and deepen my understanding of data science and statistics. 
+I am a Jr. Economist in Washington D.C. who has 4 years of experience with statistical modeling of economic topics (climate change, clean transportation, cybersecurity, and immigration). In my free time, I use R to analyze sports data and deepen my understanding of data science, statistics, and data viz. Currently, I am learning Python.
 
 ## Languages & Softwares
 
