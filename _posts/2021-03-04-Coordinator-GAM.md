@@ -166,8 +166,8 @@ gam_model <- gamm4(
 
 Now we can plot the data.
 
-[placedholder](https://pbs.twimg.com/media/E4a0parXwAM96Ce?format=png&name=4096x4096)
+![placeholder](https://pbs.twimg.com/media/E4a0parXwAM96Ce?format=png&name=4096x4096)
 
 One bias in this model is that we are not accounting for who the QB is. For example, before Dak was injured Kellen Moore was among the highest individual probability estimates in our model. When Dak was hurt, Moore obviously passed less and his estimate fell.
 
-[placedholder](https://pbs.twimg.com/media/E4b3QrWX0AcZhLj?format=png&name=4096x4096)
+![placeholder](https://pbs.twimg.com/media/E4b3QrWX0AcZhLj?format=png&name=4096x4096)
