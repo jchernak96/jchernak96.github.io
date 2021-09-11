@@ -16,7 +16,7 @@ In this post I;
 
 ### Data 
 
-As outlined in my previous post, I scraped PFR for their coordinator level data and output it into a format that can be quickly joined to PBB data. I loaded this data into Python and only selected the last 6 years of data (otherwise my computer will run very very slow). 
+As outlined in my previous post, I scraped PFR for their coordinator level data and output it into a format that can be quickly joined to PBB data. I loaded this data into Python and only selected the last 6 years of data (otherwise my computer will run very very slow). An important aspect of my analysis is that I am considering each coordinator year as its own group, meaning the model will view coordinator 2019 as different than coordinator 2020. My reasoning is that tendencies can change between years because of personnel so it is more effective to assign situational pass probabilites year by year and then compare those charts. Ideally, there is a way to weight more recent coordinator observations so that the predictions are not skewed by old seasons. This is something to explore in the future though.
 
 ```
 #Load in packages
@@ -37,10 +37,40 @@ pbp_data = pd.read_csv("C:/Users/Joe/Desktop/Coordinator_NFL_Final.csv")
 pbp_data.head(5)
 ```
 
+### Issues and Solutions
 
+Incorporating categorical variables into a random forest model can be approached from multiple angles, one could one hot encode how ever many coordinators into the data or just build the random forest model and insert a mixed effect for coordinators after. Both approaches are suboptimal though and I saught out a solution that combines random forests wtih mixed effects. I found the GPboost package as a result, the package combines tree-boosting and mixed effects to create one model. I've never seen this method used in the sports space to my knowledge so this required a fair amount of trial and error on my part (especially since I am still new to Python). Nevertheless, I powered through and learned a lot about Python along the way. 
 
+With one issue out of the way, I found another new problem. A traditional train test split would not be a good idea for this mixed effect model because we would run the risk of overrepresenting certain coordinators or underrepresenting in the train or test sets. And because we are interested in every coordinator, we have to make sure each one has an equal proportion of data in the train and test sets we will be using. So, I wrote a simple loop that takes 70% of each coordinators season data and adds it to a train dataframe while the remaining proportion is put into a test set. 
 
+`
+#Select our target and variables of interest, going to stick with non spread adjusted WP in the model
 
+modeling_data = pbp_data[["yardline_100", 
+                          "qtr",
+                          "half_seconds_remaining", 
+                          "ydstogo",
+                          "down",
+                          "shotgun",            
+                          "score_differential",
+                          "posteam_timeouts_remaining",
+                          "defteam_timeouts_remaining",
+                          "wp", 
+                          "O_Coordinator",
+                          "pass"]]
 
+# Train test method
 
+train_final  = pd.DataFrame()
+test_final   = pd.DataFrame()
+Coordinators = modeling_data['O_Coordinator'].unique()
+length = len(Coordinators)
+for x in range(length):
+    Coordinator_X = Coordinators[x]
+    Data_Filtered = modeling_data[modeling_data['O_Coordinator'] == Coordinator_X]
+    train, test   = train_test_split(Data_Filtered, test_size= .3, random_state=94)
+    train_final   = train_final.append(train)
+    test_final    = test_final.append(test)
+
+`
 
