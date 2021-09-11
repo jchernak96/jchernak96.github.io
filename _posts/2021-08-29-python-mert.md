@@ -44,7 +44,7 @@ Incorporating categorical variables into a random forest model can be approached
 With one issue out of the way, I found another new problem. A traditional train test split would not be a good idea for this mixed effect model because we would run the risk of overrepresenting certain coordinators or underrepresenting in the train or test sets. And because we are interested in every coordinator, we have to make sure each one has an equal proportion of data in the train and test sets we will be using. So, I wrote a simple loop that takes 70% of each coordinators season data and adds it to a train dataframe while the remaining proportion is put into a test set. 
 
 ```{r}
-#Select our target and variables of interest, going to stick with non spread adjusted WP in the model
+#Select our target and variables of interest
 
 modeling_data = pbp_data[["yardline_100", 
                           "qtr",
