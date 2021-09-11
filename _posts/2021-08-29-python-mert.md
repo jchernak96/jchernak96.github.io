@@ -71,6 +71,5 @@ for x in range(length):
     train, test   = train_test_split(Data_Filtered, test_size= .3, random_state=94)
     train_final   = train_final.append(train)
     test_final    = test_final.append(test)
-
 ```
 
