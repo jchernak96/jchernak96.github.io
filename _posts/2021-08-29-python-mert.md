@@ -75,90 +75,13 @@ for x in range(length):
 
 ### Building the Model
 
-Now we can move onto training our model and tuning the hyperparameters. 
+Now we can move onto training our model and tuning the hyperparameters. The first thing we want to do is specify our likelihood function and then define what variable should be used in the mixed model. This is done via the GPModel function in python. I also create the GPModel dataset for the fixed effects portion and make the pass variable our target. Note that I include the shotgun variable in my model. I considered not including it as the NFLFastR xPass model does not but I got worse results when not including Shotgun.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Load int packages
-from gpboost.engine import train
-import pandas as pd
-import numpy as np
-import gpboost as gpb
-from sklearn.model_selection import train_test_split
-import matplotlib
-from sklearn.model_selection import GroupShuffleSplit
-
-#change options and set seed
-pd.set_option("display.max_rows", None, "display.max_columns", None)
-np.random.seed(59)
-
-#load in data & check
-pbp_data = pd.read_csv("C:/Users/Joe/Desktop/Coordinator_NFL_Final.csv")
-pbp_data.head(5)
-
-#select our target and variables of interest, going to stick with non spread adjusted WP in the model
-#reason behind the non spread is my theory that OC's don't view the game through the spread lense
-modeling_data = pbp_data[["yardline_100", 
-                          "qtr",
-                          "half_seconds_remaining", 
-                          "ydstogo",
-                          "down",
-                          "shotgun",            
-                          "score_differential",
-                          "posteam_timeouts_remaining",
-                          "defteam_timeouts_remaining",
-                          "wp", 
-                          "O_Coordinator",
-                          "pass"]]
-
-#Objectives of this analysis
-#1. Develop a probability of pass model that incorporates coordinator random effects
-#2. Examine if certain DC's are passed or rushed against more than their peers
-
-# Model development
-# Step one is to split into training and test, I am 
-
-train_final  = pd.DataFrame()
-test_final   = pd.DataFrame()
-Coordinators = modeling_data['O_Coordinator'].unique()
-length = len(Coordinators)
-for x in range(length):
-    Coordinator_X = Coordinators[x]
-    Data_Filtered = modeling_data[modeling_data['O_Coordinator'] == Coordinator_X]
-    train, test   = train_test_split(Data_Filtered, test_size= .3, random_state=94)
-    train_final   = train_final.append(train)
-    test_final    = test_final.append(test)
-
+```
 # Set likelihood function to use
 likelihood = "bernoulli_logit"
 
-# Define random effects model (OC) & inser the likelihood
+# Define random effects model (OC) & insert the likelihood
 gp_model = gpb.GPModel(group_data=train_final[['O_Coordinator']], likelihood=likelihood)
 
 # Create dataset for gpb.train
@@ -174,7 +97,10 @@ data_train = gpb.Dataset(data=train_final[[
      "defteam_timeouts_remaining",
      "wp"]],
      label=train_final['pass']) #pass is our target so we set that as the label
+```
+Next, we can specify our objective and parameters. I opted to use the random search function in the GPBoost package which allowed me to tune hyperparameters. I started with some general hyperparamter values to try and the model combines these values at random to test their performance. I also made a few changes to the grid search function and only tried 10 rounds of random combos because I have a bad computer and I also use the training data for 5 fold cross validation. I further am using log loss as the eval metric. 
 
+```
 # Set model parameters
 params = {'objective': 'binary', 
           'verbose': 0,
@@ -205,10 +131,13 @@ opt_params = gpb.grid_search_tune_parameters(param_grid=param_grid,
 print("Best number of iterations: " + str(opt_params['best_iter']))
 print("Best score: " + str(opt_params['best_score']))
 print("Best parameters: " + str(opt_params['best_params']))
+```
+Great! It appears the model is honing in on a learning rate in the mid .2's and a max depth around 5. In response, I will change my param grid to try to fine tune the hyperparameters. 
 
+```
 # Reevaluate parameters
 param_grid = {'learning_rate': [.24,.25,.26], 
-                'max_depth': [5,6],
+                'max_depth': [4,5,6],
                 'min_sum_hessian_in_leaf': [36,38,40],
                 'bagging_fraction': [.3,.35,.4],
                 'feature_fraction': [.22,.25,.27]}
@@ -229,7 +158,9 @@ opt_params = gpb.grid_search_tune_parameters(param_grid=param_grid,
 print("Best number of iterations: " + str(opt_params['best_iter']))
 print("Best score: " + str(opt_params['best_score']))
 print("Best parameters: " + str(opt_params['best_params']))
+```
 
+```
 # Train with best parameters
 params = { 'objective': 'binary',
             'learning_rate': 0.26,
@@ -251,7 +182,9 @@ gp_model.summary()
 
 # Check importance
 gpb.plot_importance(bst)
+```
 
+```
 # Define random effects model (OC) 
 group_test = test_final[["O_Coordinator"]]
 
@@ -282,8 +215,9 @@ df.to_excel('test.xlsx')
 
 #save model
 bst.save_model('xPass_model.json')
+```
 
-
+```
 #examine some situations
 first_q_situations = pd.read_csv("C:/Users/Joe/Desktop/Coordinator_NFL_Final_try.csv")
 first_q_situations["O_Coordinator"] = 'Josh McDaniels_2020'
@@ -314,6 +248,9 @@ situations_variables.reset_index(drop=True, inplace=True)
 Probs.reset_index(drop=True, inplace=True)
 df = pd.concat( [situations_variables, Probs], axis=1) 
 df.to_excel('Joshy.xlsx')
+```
+
+![placeholder](https://pbs.twimg.com/media/E_MAf4GWQAgU-c1?format=jpg&name=small)
 
 
 
