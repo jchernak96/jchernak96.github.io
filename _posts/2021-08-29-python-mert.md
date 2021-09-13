@@ -73,3 +73,14 @@ for x in range(length):
     test_final    = test_final.append(test)
 ```
 
+### Building the Model
+
+Now we can move onto training our model and tuning the hyperparameters. 
+
+
+
+
+
+
+
+
