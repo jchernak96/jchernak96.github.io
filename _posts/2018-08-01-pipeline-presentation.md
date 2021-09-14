@@ -7,5 +7,5 @@ tags: [presentation]
 category: presentation
 ---
 
-For the annual Massachusetts Undergraduate Research Conference, I presented my research on Spectra’s Access Northeast Pipeline Project. My research focused on the environmental and economic costs and benefits of the pipeline. The poster presentation can [found here](https://github.com/jchernak96/AnalyticsChallenge2021/blob/main/Submissions/jtchernak%40comcast.net/Sports%20Info%20Solutions%20Analytics%20Challenge.pdf).
+For the annual Massachusetts Undergraduate Research Conference, I presented my research on Spectra’s Access Northeast Pipeline Project. My research focused on the environmental and economic costs and benefits of the pipeline. The poster presentation can [found here](https://github.com/jchernak96/jchernak96.github.io/blob/master/images/joechernak12.pdf).
 
