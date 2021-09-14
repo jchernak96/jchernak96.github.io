@@ -266,14 +266,14 @@ Now we can put the data into a table (done in R because tables in Python are not
 
 This is the advantage of having a coordinator adjusted model, we can see how an OC may be changing their style or how personel is influencing their play calls.
 
-
-![placeholder](https://pbs.twimg.com/media/E_RY1C1XsAY0rhq?format=jpg&name=small)
+![placeholder](https://pbs.twimg.com/media/E_MAf4GWQAgU-c1?format=jpg&name=small)
 
  We can do this for the rests of the league as well, some teams have different OC's so I just used whomever was the 2020 OC as their previous season ref point. A few things that stand out/should be noted.
  - I removed post-Dak injury games which dramatically improved the predictive power of Kellen Moore's 2020 season on week 1 vs Tampa Bay.
  - Washington fell into the 2 high safety Brandon Staley trap and ran too much (although some can be attributed to the Fitz injury).
  - Buffalo passed so much last year that any return to normalcy would appear dramatic.
+ - 
+![placeholder](https://pbs.twimg.com/media/E_RY1C1XsAY0rhq?format=jpg&name=small)
 
-![placeholder](https://pbs.twimg.com/media/E_MAf4GWQAgU-c1?format=jpg&name=small)
 
 
