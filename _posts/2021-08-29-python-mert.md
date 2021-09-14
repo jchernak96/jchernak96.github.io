@@ -132,7 +132,7 @@ print("Best number of iterations: " + str(opt_params['best_iter']))
 print("Best score: " + str(opt_params['best_score']))
 print("Best parameters: " + str(opt_params['best_params']))
 ```
-Great! It appears the model is honing in on a learning rate in the mid .2's and a max depth around 5. In response, I will change my param grid to try to fine tune the hyperparameters. 
+Great! It appears the model is honing in on a learning rate in the mid .2's and a max depth around 5. In response, I will change my param grid to try to fine tune the hyperparameters. I set some new parameters in this range and re-run the model below.
 
 ```
 # Reevaluate parameters
@@ -146,7 +146,7 @@ param_grid = {'learning_rate': [.24,.25,.26],
 opt_params = gpb.grid_search_tune_parameters(param_grid=param_grid,
                                              params=params,
                                              num_try_random=15,
-                                             nfold=4,
+                                             nfold=5,
                                              gp_model=gp_model,
                                              use_gp_model_for_validation=True,
                                              train_set=data_train,
@@ -159,6 +159,15 @@ print("Best number of iterations: " + str(opt_params['best_iter']))
 print("Best score: " + str(opt_params['best_score']))
 print("Best parameters: " + str(opt_params['best_params']))
 ```
+I won't pain you with the fine tuning because it is just me trying smaller numbers to hone in on the best combo. Eventually, the model returned a:
+- learning_rate: 0.26
+- max_depth: 6
+- min_sum_hessian_in_leaf: 38
+- bagging_fraction: 0.35
+- feature_fraction: 0.25
+- boosting rounds: 999
+
+We can now train the model with these parameters and check our importance plot. 
 
 ```
 # Train with best parameters
@@ -183,6 +192,7 @@ gp_model.summary()
 # Check importance
 gpb.plot_importance(bst)
 ```
+Nothing too surprising here. We can now proceed by fitting our model to the test data and checking model calibration. 
 
 ```
 # Define random effects model (OC) 
@@ -216,6 +226,7 @@ df.to_excel('test.xlsx')
 #save model
 bst.save_model('xPass_model.json')
 ```
+I created these calibration plots in R as I am still not the most familiar with Python plotting yet. Nevertheless, it looks like our model is well calibrated and ready for deployment. One thing we can do is observe how much more pass happy or run heavy a team is in 2021 relative to their 2020 counterpart. Not all coordinators returned in 2021 so some teams are represented by a different coordinator. One coordinator of interest to me is Josh McDaniels, we can fit week 1 against Miami with the model to observe his pass tendency relative to 2020.
 
 ```
 #examine some situations
@@ -249,10 +260,20 @@ Probs.reset_index(drop=True, inplace=True)
 df = pd.concat( [situations_variables, Probs], axis=1) 
 df.to_excel('Joshy.xlsx')
 ```
+Now we can put the data into a table (done in R because tables in Python are not fun) and see that 
+1. Josh McDaniels called a conservative game relative to what the league would have done in the game situations he was presented with
+2. He was more aggressive than last year in terms of passing rate, which shows how conservative he was in 2020.
 
-![placeholder](https://pbs.twimg.com/media/E_MAf4GWQAgU-c1?format=jpg&name=small)
+This is the advantage of having a coordinator adjusted model, we can see how an OC may be changing their style or how personel is influencing their play calls.
 
 
 ![placeholder](https://pbs.twimg.com/media/E_RY1C1XsAY0rhq?format=jpg&name=small)
+
+ We can do this for the rests of the league as well, some teams have different OC's so I just used whomever was the 2020 OC as their previous season ref point. A few things that stand out/should be noted.
+ - I removed post-Dak injury games which dramatically improved the predictive power of Kellen Moore's 2020 season on week 1 vs Tampa Bay.
+ - Washington fell into the 2 high safety Brandon Staley trap and ran too much (although some can be attributed to the Fitz injury).
+ - Buffalo passed so much last year that any return to normalcy would appear dramatic.
+
+![placeholder](https://pbs.twimg.com/media/E_MAf4GWQAgU-c1?format=jpg&name=small)
 
 
