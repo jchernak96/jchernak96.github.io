@@ -272,7 +272,7 @@ This is the advantage of having a coordinator adjusted model, we can see how an 
  - I removed post-Dak injury games which dramatically improved the predictive power of Kellen Moore's 2020 season on week 1 vs Tampa Bay.
  - Washington fell into the 2 high safety Brandon Staley trap and ran too much (although some can be attributed to the Fitz injury).
  - Buffalo passed so much last year that any return to normalcy would appear dramatic.
- - 
+ 
 ![placeholder](https://pbs.twimg.com/media/E_RY1C1XsAY0rhq?format=jpg&name=small)
 
 
