@@ -226,9 +226,6 @@ df.to_excel('test.xlsx')
 #save model
 bst.save_model('xPass_model.json')
 ```
-<img src="https://github.com/jchernak96/jchernak96.github.io/blob/master/images/plot_zoom_png4.png?raw=true" width="400">
-
-<img src="https://github.com/jchernak96/jchernak96.github.io/blob/master/images/plot_zoom_png.png?raw=true" width="400">
 
 I created these calibration plots in R as I am still not the most familiar with Python plotting yet. Nevertheless, it looks like our model is well calibrated and ready for deployment. One thing we can do is observe how much more pass happy or run heavy a team is in 2021 relative to their 2020 counterpart. Not all coordinators returned in 2021 so some teams are represented by a different coordinator. One coordinator of interest to me is Josh McDaniels, we can fit week 1 against Miami with the model to observe his pass tendency relative to 2020.
 
