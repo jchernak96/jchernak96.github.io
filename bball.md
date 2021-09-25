@@ -1,4 +1,4 @@
 ---
 layout: post-index
-title: Baseball Work
+title: All Baseball Posts
 ---
