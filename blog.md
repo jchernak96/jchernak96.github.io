@@ -1,4 +1,4 @@
 ---
 layout: post-index
-title: All Football Posts
+title: All Football Work
 ---
