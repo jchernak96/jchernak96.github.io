@@ -24,3 +24,9 @@ The first step in this project was acquiring pitch level data from statcast. For
 
 Another data cleaning part of this model is grouping a few events into more general event types. This primarily involved very specific out types (such as a sac fly) and moving those into a general field out designation. This was pretty straightforward and once completed I was able to select the columns from my data frame needed for determining the 2020 run value of events. 
 
+### Determining Event Level xRV
+
+When a batter is faced with a 3-0, 0-2, or full count, there exists two events that can happen: strikeout in same cases or walk in others. This mattters in our model because if a batter is presented with one of these counts, we need to know the increase in xRV of taking a pitch (in some cases resulting in a walk) or the decrease in xRV from striking out. Thus, a necessary step in this analysis is finding the xRV of all events (which includes strikeouts and walks). 
+
+
+
