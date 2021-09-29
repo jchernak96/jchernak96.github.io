@@ -10,7 +10,7 @@ category: bball
 
 *Just started this project, more coming soon.
 
-The topic of pitcher patience and swing selection has more or less focused on outside zone swing % or chase rate. While this provides a general overview of how strong a batters eye is, it ignores some valuable aspects of swing selection such as:
+The topic of batter patience and swing selection has more or less focused on outside zone swing % or chase rate. While this provides a general overview of how strong a batters eye is, it ignores some valuable aspects of swing selection such as:
 
 - What pitches is a batter swinging at? Is he being too patient and not swinging at pitches in his 'blast zone'?
 - Is a batter being to aggressive early in the count on fringe pitches that have a low expected run value?
