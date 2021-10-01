@@ -20,7 +20,7 @@ These aspects of swinging are important and can inform us about the true effecti
 
 ### Data Prep 
 
-The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. Once I had this data, I did some basic re-coding of pitches to move less common pitches (such as a knuckle curve or splitter) into more common designations (such as curveball or changup) under the assumption that these pitches have similar shapes and areas of effectivness. 
+The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. Once the data was loaded I needed to find the run expectancy values for each game state situation. This is pretty simple as we just have to create a few columns that inform us of the game state (outs, base situations), the max runs scored by the batting team in each inning, and the number of runs scored from the time of an at bat to the end of the inning.
 
 ```{r}
 #Load packages
@@ -33,7 +33,6 @@ from pandas.core.algorithms import mode
 
 #Data
 data = statcast(start_dt='2021-08-05', end_dt='2021-09-24')
-data = data.dropna(subset=['pitch_type'])
 
 #create function for columns prepare for run expectancy calcs
 def base_out_game_state(df):
@@ -47,6 +46,8 @@ def base_out_game_state(df):
     df['base_out_state']       = df['outs_situation'] + df['1_b_situation'] + df['2_b_situation'] + df['3_b_situation']
     return(df)
 ```
+
+The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. 
 
 Another data cleaning part of this model is grouping a few events into more general event types. This primarily involved very specific out types (such as a sac fly) and moving those into a general field out designation. This was pretty straightforward and once completed I was able to select the columns from my data frame needed for determining the 2020 run value of events. 
 
