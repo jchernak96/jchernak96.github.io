@@ -20,7 +20,7 @@ These aspects of swinging are important and can inform us about the true effecti
 
 ### Data Prep 
 
-The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. Once the data was loaded I needed to find the run expectancy values for each game state situation. This is pretty simple as we just have to create a few columns that inform us of the game state (outs, base situations), the max runs scored by the batting team in each inning, and the number of runs scored from the time of an at bat to the end of the inning.
+The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. Once the data was loaded I needed to find the run expectancy values for each game state situation. This is pretty simple as we just have to create a few columns that inform us of the game state (outs, base situations), the max runs scored by the batting team in each inning, and the number of runs scored from the time of an at bat to the end of the inning. We can then attach this function to our dataframe and proceed to creating our run expectancy state table. This was also straightforward and simply involved grouping by game states and then averaging runs scored.
 
 ```{r}
 #Load packages
@@ -47,7 +47,6 @@ def base_out_game_state(df):
     return(df)
 ```
 
-The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. 
 
 Another data cleaning part of this model is grouping a few events into more general event types. This primarily involved very specific out types (such as a sac fly) and moving those into a general field out designation. This was pretty straightforward and once completed I was able to select the columns from my data frame needed for determining the 2020 run value of events. 
 
