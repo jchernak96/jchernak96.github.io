@@ -22,6 +22,32 @@ These aspects of swinging are important and can inform us about the true effecti
 
 The first step in this project was acquiring pitch level data from statcast. Fortuantly, the pyBaseball savant scraper works very well and allowed me to quickly grab all data from 2021. Once I had this data, I did some basic re-coding of pitches to move less common pitches (such as a knuckle curve or splitter) into more common designations (such as curveball or changup) under the assumption that these pitches have similar shapes and areas of effectivness. 
 
+```{r}
+#Load packages
+from itertools import groupby
+import numpy as np
+import re
+import pandas as pd
+from baseball_scraper import statcast
+from pandas.core.algorithms import mode
+
+#Data
+data = statcast(start_dt='2021-08-05', end_dt='2021-09-24')
+data = data.dropna(subset=['pitch_type'])
+
+#create function for columns prepare for run expectancy calcs
+def base_out_game_state(df):
+    df['final_pitch_at_bat']   = df.groupby(["game_pk","at_bat_number","inning_topbot"])['pitch_number'].transform('max')
+    df['bat_score_end_inning'] = df.groupby(["game_pk", "inning", "inning_topbot"])['bat_score'].transform('max')
+    df['runs_to_end_inning']   = df['bat_score_end_inning'] - df['bat_score']
+    df['outs_situation']       = df['outs_when_up'].astype(str) + ' outs'
+    df['1_b_situation']        = np.where(df[['on_1b']].isnull(), '_', '1b')
+    df['2_b_situation']        = np.where(df[['on_2b']].isnull(), '_', '2b')
+    df['3_b_situation']        = np.where(df[['on_3b']].isnull(), '_', '3b')
+    df['base_out_state']       = df['outs_situation'] + df['1_b_situation'] + df['2_b_situation'] + df['3_b_situation']
+    return(df)
+```
+
 Another data cleaning part of this model is grouping a few events into more general event types. This primarily involved very specific out types (such as a sac fly) and moving those into a general field out designation. This was pretty straightforward and once completed I was able to select the columns from my data frame needed for determining the 2020 run value of events. 
 
 ### Determining Event Level xRV
